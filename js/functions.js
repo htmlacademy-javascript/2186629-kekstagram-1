@@ -9,33 +9,52 @@
 // 1-я функция
 //Функция для проверки, является ли строка палиндромом. Палиндром — это слово или фраза, которые одинаково читаются и слева направо и справа налево. Например:
 
+//Вырезание пробелов - вспомогательная функция, линтер ругнулся, сказал передвинуть наверх, я ее изначально размещал ниже основной функции
+const cutingSpaces = (strWithSpaces) => {
+  const tempStr = [];
+  //console.log('!!!');
+  //console.log(strWithSpaces);
+
+  for(let i = 0; i <= strWithSpaces.length - 1; i++) {
+    if(strWithSpaces[i] !== ' ') {
+      tempStr.push(strWithSpaces[i]);
+    }
+  }
+
+  return tempStr;
+
+};
 
 const checkWord = (str) => {
-
-  let result = true;
 
   //[нужно сначала делать join, а потом reverse, потому что сейчас функция работает не правильно если в строке больше одного слова]
   //-Не совсем понятно почему join первым, join же собирает строку из массива. Я пытался поставить впереди, он выдает ошибки. Попробовал удлинить фразы, как я сделал, работает. Ниже примеры в вызове функций.
 
   //переворачиваем слово
-  let reverse = str.split('').reverse().join('');
+  let reverse = str.split(''); //Разбиваем массив на элементы
+  str = reverse;
+
+  //Вызов функции по вырезанию пробелов
+  reverse = cutingSpaces(reverse);
+  str = cutingSpaces(str);
+
+  //Реверс и соединение массивов
+  reverse = reverse.reverse().join('');
+  str = str.join('');
 
   //убираем разные регистры
   str = str.toLowerCase();
-  //console.log(str);
   reverse = reverse.toLowerCase();
-  //console.log(reverse);
 
-  //[тут можно подсократить код, можно сразу возвращать результат сравнения return str === reverse;]
-  // - Сделал вот так, если правильно тебя понял.
-  //Проверка
-  result = str === reverse;
-  return result;
+  return str === reverse;
 
 };
 
+
+//Доп. задание
+checkWord('Лёша на полке клопа нашёл ');
 // Строка является палиндромом
-checkWord('топот топот'); // true
+//checkWord('топот топот'); // true
 //checkWord('топот'); // true
 // Несмотря на разный регистр, тоже палиндром
 //checkWord('ДовОд'); // true
@@ -61,8 +80,8 @@ const extractingNumbers = (str) => {
   if(newStr === '') {
     return NaN;
   } else {
-    // eslint-disable-next-line radix
-    newStr = parseInt(newStr);
+
+    newStr = parseInt(newStr, 10);
     return newStr; //С записанными цифрами
   }
 };
